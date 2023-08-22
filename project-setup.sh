@@ -362,6 +362,14 @@ copro_server_stop(){
 	byobu kill-session -t "COPRO_LOGS"
 }
 
+vulcan_stop_server(){
+
+		#kill $(lsof -i :3000)
+
+}
+
+
+
 # 7) UI setup 
 vulcan_npm_setup(){
 
@@ -428,7 +436,7 @@ while true; do
 			7) copro_server_stop;;
 			8) vulcan_npm_setup;;
 			9) vulcan_start_server;;
-			10) ;;
+			10) vulcan_stop_server;;
 			0) optionsList ;;
 			*) echo "invalid option"
 optionsList
