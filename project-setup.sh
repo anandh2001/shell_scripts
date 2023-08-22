@@ -289,6 +289,9 @@ done
 # 6). copro start all the servers in byobu
 copro_start_server(){
 
+
+	sudo apt-get install byobu;
+	python --version
 #byobu kill-session -t "COPRO_LOGS"
 if byobu list-sessions | grep -q "COPRO_LOGS"; then
   echo "Copro session exists"
@@ -355,6 +358,10 @@ read -r -p "Please enter your workspace directory :  " workspace_dir
 }
 
 
+copro_server_stop(){
+	byobu kill-session -t "COPRO_LOGS"
+}
+
 # 7) UI setup 
 vulcan_npm_setup(){
 
@@ -386,8 +393,9 @@ optionsList(){
 |                                                                                                |
 |    1) Git clone all the repository(pipeline)  |  2) Create python environment                  |
 |    3) Setup postgres database                 |  4) Database SQL dump load                     |
-|    5) Git clone all the repository(Intics-ui) |  6) copro start server                         |
-|    7) Intics-ui npm install                   |  8) Intics-ui server start                     |
+|    5) Git clone all the repository(Intics-ui) |  6) copro server start                         |
+|    7) copro server stop                       |  8)  Intics-ui npm install                     |
+|    9) Intics-ui server start                  |  10) Intics-ui server stop                     |
 |    q) quit                                                                                     |
 |    l) clear                                                                                    |
 |                                                                                                |
@@ -417,8 +425,10 @@ while true; do
 			4) Database_Configuration_load;;
 			5) git_clone_UI;;
 			6) copro_start_server;;
-			7) vulcan_npm_setup;;
-			8) vulcan_start_server;;
+			7) copro_server_stop;;
+			8) vulcan_npm_setup;;
+			9) vulcan_start_server;;
+			10) ;;
 			0) optionsList ;;
 			*) echo "invalid option"
 optionsList
