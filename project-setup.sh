@@ -362,11 +362,11 @@ copro_server_stop(){
 	byobu kill-session -t "COPRO_LOGS"
 }
 
-vulcan_stop_server(){
+# vulcan_stop_server(){
 
-		#kill $(lsof -i :3000)
+# 		#kill $(lsof -i :3000)
 
-}
+# }
 
 
 
