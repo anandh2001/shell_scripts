@@ -412,7 +412,6 @@ optionsList(){
 
 
 
-NC='\033[0m'
 
 
 optionsList 
