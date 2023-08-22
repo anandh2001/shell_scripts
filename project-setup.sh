@@ -7,6 +7,7 @@
 export RED="\033[31m"
 export NC="\033[0m"
 export WHITE="\033[0m"
+export BLUE="\033[34m"
 
 
 
@@ -63,7 +64,7 @@ fi
 ##################### GIT CLONE HANDYMAN ########################
 
 cd $BASE_DIR
-echo "Cloning handyman "
+echo "${BLUE}Cloning handyman ${WHITE}"
 git clone git@github.com:zucisystems-dev/handyman.git
 sleep 1
 cd $BASE_DIR/handyman/
@@ -74,14 +75,14 @@ git checkout donut_ut/dev #branch name can be changed
 #. ~/.profile_maven
 
 mvn clean antlr4:antlr4 test -Dtest=ActionGenerationTest#generate compile install -DskipTests
-echo "Handyman build has been completed handyman-raven-vm-2.0.0.jar"
-echo "Cloning handyman finished "
+echo "${BLUE}Handyman build has been completed handyman-raven-vm-2.0.0.jar"
+echo "${BLUE}Cloning handyman finished "
 
 ##################### GIT CLONE HANDYMAN END ######################
 
 ##################### GIT CLONE APP ###############################
 cd $BASE_DIR
-echo "Cloning intics-app "
+echo "${BLUE}Cloning intics-app ${WHITE}"
 git clone git@github.com:dinesh-jraman/intics-agadia.git
 sleep 1
 cd $BASE_DIR/intics-agadia/agadia/
@@ -89,7 +90,7 @@ git reset --hard HEAD
 git pull --rebase
 git checkout enhancement/copro_start_export #branch name can be changed
 #cp -f $DIR/config.properties $BASE_DIR/intics-agadia/agadia/src/main/resources/config.properties
-#cp -f $BASE_DIR/handyman/target/handyman-raven-vm-2.0.0.jar $BASE_DIR/intics-agadia/agadia/lib/
+cp -f $BASE_DIR/handyman/target/handyman-raven-vm-2.0.0.jar $BASE_DIR/intics-agadia/agadia/lib/
 
 . ~/.profile_maven
 mvn install:install-file -Dfile=lib/handyman-raven-vm-2.0.0.jar -DgroupId=in.handyman -DartifactId=raven -Dversion=2.0.0 -Dpackaging=jar -DgeneratePom=true -Dspring.config.location="src/main/resources/config.properties" -DskipTests
@@ -98,15 +99,15 @@ mvn install:install-file -Dfile=lib/handyman-raven-vm-2.0.0.jar -DgroupId=in.han
 . ~/.profile_maven
 mvn clean package -DskipTests
 
-echo "JAVA Application Build has been completed"
-echo "Cloning intics-app finished "
+echo "${BLUE}JAVA Application Build has been completed${WHITE}"
+echo "${BLUE}Cloning intics-app finished ${WHITE}"
 ##################### GIT CLONE APP END ##############################
 
 
 ######################## GIT CLONE COPRO #############################
 
 
-echo "Cloning copro "
+echo "${BLUE}Cloning copro ${WHITE}"
 cd $BASE_DIR
 git clone git@github.com:zucisystems-dev/copro.git
 
@@ -118,14 +119,14 @@ git pull --rebase
 
 git checkout master-agadia-v4 #branch name can be changed
 
-echo "Cloning copro finished "
+echo "${BLUE}Cloning copro finished ${WHITE}"
 
 ######################## GIT CLONE COPRO END #############################
 
 
 ######################## GIT CLONE GATEKEEPER ##########################
 
-echo "Cloning gatekeeper "
+echo "${BLUE}Cloning gatekeeper ${WHITE}"
 cd $BASE_DIR
 git clone git@github.com:zucisystems-dev/agadia-gatekeeper.git
 sleep 1
@@ -136,7 +137,7 @@ git checkout master #branch name can be changed
 #cp -f $DIR/config.properties $BASE_DIR/handyman/src/main/resources/config.properties
 mvn clean package -DskipTests
 
-echo "Cloning gatekeeper finished "
+echo "${BLUE}Cloning gatekeeper finished ${WHITE}"
 
 ######################## GIT CLONE GATEKEEPER END #######################
 
@@ -171,10 +172,10 @@ copro_env(){
 # 3). setting up postgresql database
 setup_postgres(){
 	if command -v psql &> /dev/null; then
-    	echo "PostgreSQL is already installed."
+    	echo "${BLUE}PostgreSQL is already installed.${WHITE}"
     	psql --version
     else
-    	echo "PostgreSQL is not installed."
+    	echo "${BLUE}PostgreSQL is not installed.${WHITE}"
 		sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 		wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 		sudo apt-get update
@@ -247,7 +248,7 @@ while true; do
 
 		######################## GIT CLONE INTICS UI ############################
 
-		echo "Cloning intics UI "
+		echo "${BLUE}Cloning intics UI ${WHITE}"
 		cd $UI_BASE_DIR
 		git clone git@github.com:zucisystems-dev/vulcan.git
 		sleep 1
@@ -258,7 +259,7 @@ while true; do
 		#cp -f $DIR/config.properties $BASE_DIR/handyman/src/main/resources/config.properties
 		# mvn clean package -DskipTests
 			
-		echo "Cloning intics UI finished "
+		echo "${BLUE}Cloning intics UI finished ${WHITE}"
 
 
 		######################## GIT CLONE INTICS UI END############################
