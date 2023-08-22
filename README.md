@@ -1,5 +1,10 @@
 # shell_scripts
 
+
+To run the script
+1. clone the repo
+2. give permission to the file $ chmod +x project-setup
+3. To run $ ./project-setup
 +────────────────────────────────────────────────────────────────────────────────────────────────+
 |                                                                                                |
 |    1) Git clone all the repository(pipeline)  |  2) Create python environment                  |
