@@ -70,7 +70,7 @@ sleep 1
 cd $BASE_DIR/handyman/
 git reset --hard HEAD
 git pull --rebase
-git checkout donut_ut/dev #branch name can be changed
+git checkout Release/1.0_RC #branch name can be changed
 #cp -f $DIR/config.properties $BASE_DIR/handyman/src/main/resources/config.properties
 #. ~/.profile_maven
 
@@ -303,11 +303,11 @@ fi
 
         read -r -p "Please enter your workspace directory :  " workspace_dir
 
-		if [ ! -d "$workspace_dir/pipeline/copro/" ]; then 
-			echo "${RED}  $workspace_dir/pipeline/copro/ does not exists. ${WHITE}"
+		if [ ! -d "$workspace_dir" ]; then 
+			echo "${RED}  $workspace_dir does not exists. ${WHITE}"
 			break
 		else
-			echo "Directory present : $workspace_dir/pipeline/copro/"  
+			echo "Directory present : $workspace_dir"  
 		fi
 
 tabs=(PI AR TE ZSC PM PC QR VALUATION NER MERGER COS IMPIRA UTMODEL)
@@ -322,19 +322,23 @@ for i in {1..15}; do
 done
 
 
-containers=(pr1.copro.paper.itemizer pr1.copro.auto.rotation pr1.copro.data.extraction pr1.copro.zsc pr1.copro.pm pr1.copro.paper.classification pr1.copro.qr pr1.copro.valuation pr1.copro.ner pr1.copro.merger pr1.copro.cossimilarity pr1.copro.impira pr1.copro.utmodel)
-ports=(10280 10281 10282 10283 10284 10285 10286 10289 10290 10291 10292 10293 10294)
+containers=(pr1.copro.paper.itemizer pr1.copro.auto.rotation pr1.copro.data.extraction pr1.copro.zsc pr1.copro.pm pr1.copro.paper.classification pr1.copro.qr pr1.copro.valuation pr1.copro.ner pr1.copro.merger pr1.copro.cossimilarity pr1.copro.impira pr1.copro.utmodel pr1.copro.table)
+ports=(10280 10281 10282 10283 10284 10285 10286 10289 10290 10291 10292 10293 10294 10296)
 
 
 for i in "${!containers[@]}"; do
   container="${containers[i]}"
   port="${ports[i]}"
   tab="${tabs[i]}"
-  byobu send-keys -t COPRO_LOGS:$i "cd $workspace_dir/pipeline/copro/" Enter
+  byobu send-keys -t COPRO_LOGS:$i "cd $workspace_dir" Enter
   #byobu send-keys -t COPRO_LOGS:$i "poetry shell" Enter
-  byobu send-keys -t COPRO_LOGS:$i "poetry run uvicorn app.copro_admin_api:app --host 127.0.0.1 --port $port" Enter
+  byobu send-keys -t COPRO_LOGS:$i "source copro_env/bin/activate && uvicorn app.copro_admin_api:app --host 127.0.0.1 --port $port" Enter
   echo "Copro logs started for $container with port and window $tab"
 done
+
+byobu send-keys -t COPRO_LOGS:15 "cd $workspace_dir" Enter
+byobu send-keys -t COPRO_LOGS:15 "source copro_env/bin/activate && uvicorn app.copro_prep_ui_api:app --host 127.0.0.1 --port 10295" Enter
+
 
 }
 
